@@ -210,20 +210,22 @@ function display () {
 
   x1.domain([minExtent, maxExtent]);
 
-  var ONEYEAR = 365*24*3600*1000;
   var ONEMONTH = 30*24*3600*1000;
+  var ONEYEAR = 365*24*3600*1000;
+  var THREEYEAR = 3*ONEYEAR;
 
-  if ((maxExtent - minExtent) > ONEYEAR) {
-    xmainBottomAxis.ticks(d3.time.months, 3).tickFormat(d3.time.format('%b'));
+  if ((maxExtent - minExtent) > THREEYEAR) {
+    xmainTopAxis.ticks(d3.time.years, 3).tickFormat(d3.time.format('%Y'));
+    xmainBottomAxis.ticks(d3.time.years, 1).tickFormat(d3.time.format('%Y'));
+  } else if ((maxExtent - minExtent) > ONEYEAR) {
     xmainTopAxis.ticks(d3.time.years, 1).tickFormat(d3.time.format('%Y'));
-  }
-  else if ((maxExtent - minExtent) > ONEMONTH) {
-    xmainBottomAxis.ticks(d3.time.weeks, 4).tickFormat(d3.time.format('w%W'));
+    xmainBottomAxis.ticks(d3.time.months, 3).tickFormat(d3.time.format('%b'));
+  } else if ((maxExtent - minExtent) > ONEMONTH) {
     xmainTopAxis.ticks(d3.time.months, 1).tickFormat(d3.time.format('%b'));
-  }
-  else {
-    xmainBottomAxis.ticks(d3.time.days, 7).tickFormat(d3.time.format('d%e'));
+    xmainBottomAxis.ticks(d3.time.weeks, 4).tickFormat(d3.time.format('w%W'));
+  } else {
     xmainTopAxis.ticks(d3.time.weeks, 1).tickFormat(d3.time.format('w%W'));
+    xmainBottomAxis.ticks(d3.time.days, 7).tickFormat(d3.time.format('d%e'));
   }
 
 
