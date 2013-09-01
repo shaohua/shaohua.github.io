@@ -1,22 +1,30 @@
 //credits:
 //inspired by http://bl.ocks.org/bunkat/1962173
 
+/* global realData, d3 */
+//set up data
 var data = realData,
-  lanes = data.lanes,
-  items = data.items,
-  now = new Date();
+   lanes = data.lanes,
+   items = data.items,
+     now = new Date();
+
+//set up the size of graph
 var margin = {top: 20, right: 15, bottom: 15, left: 60},
   width = 960 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom,
   miniHeight = lanes.length * 12 + 50,
   mainHeight = height - miniHeight - 50;
 
+//set up the scale
 var x = d3.time.scale()
-  .domain([d3.time.sunday(d3.min(items, function(d) { return d.start; })),
-       d3.max(items, function(d) { return d.end; })])
-  .range([0, width]);
+          .domain([
+            d3.min(items, function(d) { return d.start; }),
+            d3.max(items, function(d) { return d.end;   })
+          ])
+          .range([0, width]);
 var x1 = d3.time.scale().range([0, width]);
 
+//set up extent
 var ext = d3.extent(lanes, function(d) { return d.id; });
 var y1 = d3.scale.linear().domain([ext[0], ext[1] + 1]).range([0, mainHeight]);
 var y2 = d3.scale.linear().domain([ext[0], ext[1] + 1]).range([0, miniHeight]);
@@ -53,14 +61,14 @@ main.append('g').selectAll('.laneLines')
   .attr('y1', function(d) { return d3.round(y1(d.id)) + 0.5; })
   .attr('x2', width)
   .attr('y2', function(d) { return d3.round(y1(d.id)) + 0.5; })
-  .attr('stroke', function(d) { return d.label === '' ? 'white' : 'lightgray' });
+  .attr('stroke', function(d) { return d.label === '' ? 'white' : 'lightgray'; });
 
 main.append('g').selectAll('.laneText')
   .data(lanes)
   .enter().append('text')
   .text(function(d) { return d.label; })
   .attr('x', -10)
-  .attr('y', function(d) { return y1(d.id + .5); })
+  .attr('y', function(d) { return y1(d.id + 0.5); })
   .attr('dy', '0.5ex')
   .attr('text-anchor', 'end')
   .attr('class', 'laneText');
@@ -73,20 +81,20 @@ mini.append('g').selectAll('.laneLines')
   .attr('y1', function(d) { return d3.round(y2(d.id)) + 0.5; })
   .attr('x2', width)
   .attr('y2', function(d) { return d3.round(y2(d.id)) + 0.5; })
-  .attr('stroke', function(d) { return d.label === '' ? 'white' : 'lightgray' });
+  .attr('stroke', function(d) { return d.label === '' ? 'white' : 'lightgray'; });
 
 mini.append('g').selectAll('.laneText')
   .data(lanes)
   .enter().append('text')
   .text(function(d) { return d.label; })
   .attr('x', -10)
-  .attr('y', function(d) { return y2(d.id + .5); })
+  .attr('y', function(d) { return y2(d.id + 0.5); })
   .attr('dy', '0.5ex')
   .attr('text-anchor', 'end')
   .attr('class', 'laneText');
 
 // draw the x axis
-var xDateAxis = d3.svg.axis()
+var xBottomAxis = d3.svg.axis()
   .scale(x)
   .orient('bottom')
   .ticks(d3.time.years, 1)
@@ -130,7 +138,7 @@ main.append('g')
 mini.append('g')
   .attr('transform', 'translate(0,' + miniHeight + ')')
   .attr('class', 'axis date')
-  .call(xDateAxis);
+  .call(xBottomAxis);
 
 mini.append('g')
   .attr('transform', 'translate(0,0.5)')
