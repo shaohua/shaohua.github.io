@@ -86,15 +86,15 @@ mini.append('g').selectAll('.laneText')
 var xDateAxis = d3.svg.axis()
   .scale(x)
   .orient('bottom')
-  .ticks(d3.time.years, (x.domain()[1] - x.domain()[0]) > 15552e6 ? 2 : 1)
+  .ticks(d3.time.years, 1)
   .tickFormat(d3.time.format('%Y'))
   .tickSize(6, 0, 0);
 
 var x1DateAxis = d3.svg.axis()
   .scale(x1)
   .orient('bottom')
-  .ticks(d3.time.days, 1)
-  .tickFormat(d3.time.format('%a %d'))
+  .ticks(d3.time.years, 1)
+  .tickFormat(d3.time.format('%Y'))
   .tickSize(6, 0, 0);
 
 var xMonthAxis = d3.svg.axis()
@@ -107,8 +107,8 @@ var xMonthAxis = d3.svg.axis()
 var x1MonthAxis = d3.svg.axis()
   .scale(x1)
   .orient('top')
-  .ticks(d3.time.mondays, 1)
-  .tickFormat(d3.time.format('%b - Week %W'))
+  .ticks(d3.time.months, 1)
+  .tickFormat(d3.time.format('%b'))
   .tickSize(15, 0, 0);
 
 main.append('g')
@@ -172,7 +172,7 @@ mini.append('rect')
 // draw the selection area
 var brush = d3.svg.brush()
   .x(x)
-  .extent([d3.time.monday(now),d3.time.saturday.ceil(now)])
+  .extent([d3.time.year(now),d3.time.year.ceil(now)])
   .on("brush", display);
 
 mini.append('g')
@@ -196,17 +196,20 @@ function display () {
 
   x1.domain([minExtent, maxExtent]);
 
-  if ((maxExtent - minExtent) > 1468800000) {
-    x1DateAxis.ticks(d3.time.mondays, 1).tickFormat(d3.time.format('%a %d'))
-    x1MonthAxis.ticks(d3.time.mondays, 1).tickFormat(d3.time.format('%b - Week %W'))
+  var ONEYEAR = 365*24*3600*1000;
+  var ONEMONTH = 30*24*3600*1000;
+
+  if ((maxExtent - minExtent) > ONEYEAR) {
+    x1DateAxis.ticks(d3.time.months, 3).tickFormat(d3.time.format('%b'));
+    x1MonthAxis.ticks(d3.time.years, 1).tickFormat(d3.time.format('%Y'));
   }
-  else if ((maxExtent - minExtent) > 172800000) {
-    x1DateAxis.ticks(d3.time.days, 1).tickFormat(d3.time.format('%a %d'))
-    x1MonthAxis.ticks(d3.time.mondays, 1).tickFormat(d3.time.format('%b - Week %W'))
+  else if ((maxExtent - minExtent) > ONEMONTH) {
+    x1DateAxis.ticks(d3.time.weeks, 4).tickFormat(d3.time.format('w%W'));
+    x1MonthAxis.ticks(d3.time.months, 1).tickFormat(d3.time.format('%b'));
   }
   else {
-    x1DateAxis.ticks(d3.time.hours, 4).tickFormat(d3.time.format('%I %p'))
-    x1MonthAxis.ticks(d3.time.days, 1).tickFormat(d3.time.format('%b %e'))
+    x1DateAxis.ticks(d3.time.days, 7).tickFormat(d3.time.format('d%e'))
+    x1MonthAxis.ticks(d3.time.weeks, 1).tickFormat(d3.time.format('w%W'))
   }
 
 
