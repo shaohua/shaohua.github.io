@@ -100,9 +100,9 @@ var x1DateAxis = d3.svg.axis()
 var xMonthAxis = d3.svg.axis()
   .scale(x)
   .orient('top')
-  .ticks(d3.time.months, 1)
-  .tickFormat(d3.time.format('%b %Y'))
-  .tickSize(15, 0, 0);
+  .ticks(d3.time.months, 12)
+  .tickFormat(d3.time.format('%Y'))
+  .tickSize(6, 0, 0);
 
 var x1MonthAxis = d3.svg.axis()
   .scale(x1)
@@ -134,8 +134,7 @@ mini.append('g')
   .attr('class', 'axis month')
   .call(xMonthAxis)
   .selectAll('text')
-    .attr('dx', 5)
-    .attr('dy', 12);
+  .remove();
 
 // draw a line representing today's date
 main.append('line')
