@@ -42,3 +42,11 @@
   fill: blue;
   fill-opacity: .165;
 }
+
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}

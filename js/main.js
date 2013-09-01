@@ -30,7 +30,7 @@ var ext = d3.extent(lanes, function(d) { return d.id; });
 var y1 = d3.scale.linear().domain([ext[0], ext[1] + 1]).range([0, mainHeight]);
 var y2 = d3.scale.linear().domain([ext[0], ext[1] + 1]).range([0, miniHeight]);
 
-var chart = d3.select('body')
+var chart = d3.select('.d3')
   .append('svg:svg')
   .attr('width', width + margin.right + margin.left)
   .attr('height', height + margin.top + margin.bottom)
