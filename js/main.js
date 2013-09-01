@@ -102,7 +102,7 @@ var xMonthAxis = d3.svg.axis()
   .orient('top')
   .ticks(d3.time.months, 12)
   .tickFormat(d3.time.format('%Y'))
-  .tickSize(6, 0, 0);
+  .tickSize(1, 0, 0);
 
 var x1MonthAxis = d3.svg.axis()
   .scale(x1)
