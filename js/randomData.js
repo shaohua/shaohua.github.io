@@ -1,5 +1,6 @@
 (function() {
-
+  //credits:
+  //inspired by http://bl.ocks.org/bunkat/1962173
   var RandomData = function() {
 
     var addToLane = function (chart, item) {

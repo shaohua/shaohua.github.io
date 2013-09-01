@@ -1,12 +1,15 @@
-var data = realData
-  , lanes = data.lanes
-  , items = data.items
-  , now = new Date();
-var margin = {top: 20, right: 15, bottom: 15, left: 60}
-  , width = 960 - margin.left - margin.right
-  , height = 500 - margin.top - margin.bottom
-  , miniHeight = lanes.length * 12 + 50
-  , mainHeight = height - miniHeight - 50;
+//credits:
+//inspired by http://bl.ocks.org/bunkat/1962173
+
+var data = realData,
+  lanes = data.lanes,
+  items = data.items,
+  now = new Date();
+var margin = {top: 20, right: 15, bottom: 15, left: 60},
+  width = 960 - margin.left - margin.right,
+  height = 500 - margin.top - margin.bottom,
+  miniHeight = lanes.length * 12 + 50,
+  mainHeight = height - miniHeight - 50;
 
 var x = d3.time.scale()
   .domain([d3.time.sunday(d3.min(items, function(d) { return d.start; })),
@@ -186,10 +189,12 @@ display();
 
 function display () {
 
-  var rects, labels
-    , minExtent = d3.time.day(brush.extent()[0])
-    , maxExtent = d3.time.day(brush.extent()[1])
-    , visItems = items.filter(function (d) { return d.start < maxExtent && d.end > minExtent});
+  var rects, labels,
+    minExtent = d3.time.day(brush.extent()[0]),
+    maxExtent = d3.time.day(brush.extent()[1]),
+    visItems  = items.filter(function (d) {
+     return d.start < maxExtent && d.end > minExtent;
+    });
 
   mini.select('.brush').call(brush.extent([minExtent, maxExtent]));
 
@@ -207,8 +212,8 @@ function display () {
     x1MonthAxis.ticks(d3.time.months, 1).tickFormat(d3.time.format('%b'));
   }
   else {
-    x1DateAxis.ticks(d3.time.days, 7).tickFormat(d3.time.format('d%e'))
-    x1MonthAxis.ticks(d3.time.weeks, 1).tickFormat(d3.time.format('w%W'))
+    x1DateAxis.ticks(d3.time.days, 7).tickFormat(d3.time.format('d%e'));
+    x1MonthAxis.ticks(d3.time.weeks, 1).tickFormat(d3.time.format('w%W'));
   }
 
 
@@ -257,11 +262,11 @@ function display () {
 }
 
 function moveBrush () {
-  var origin = d3.mouse(this)
-    , point = x.invert(origin[0])
-    , halfExtent = (brush.extent()[1].getTime() - brush.extent()[0].getTime()) / 2
-    , start = new Date(point.getTime() - halfExtent)
-    , end = new Date(point.getTime() + halfExtent);
+  var origin = d3.mouse(this),
+    point = x.invert(origin[0]),
+    halfExtent = (brush.extent()[1].getTime() - brush.extent()[0].getTime()) / 2,
+    start = new Date(point.getTime() - halfExtent),
+    end = new Date(point.getTime() + halfExtent);
 
   brush.extent([start,end]);
   display();
