@@ -101,6 +101,13 @@ var xBottomAxis = d3.svg.axis()
   .tickFormat(d3.time.format('%Y'))
   .tickSize(6, 0, 0);
 
+var xTopAxis = d3.svg.axis()
+  .scale(x)
+  .orient('top')
+  .ticks(d3.time.months, 12)
+  .tickFormat(d3.time.format('%Y'))
+  .tickSize(1, 0, 0);
+
 var x1DateAxis = d3.svg.axis()
   .scale(x1)
   .orient('bottom')
@@ -108,12 +115,6 @@ var x1DateAxis = d3.svg.axis()
   .tickFormat(d3.time.format('%Y'))
   .tickSize(6, 0, 0);
 
-var xMonthAxis = d3.svg.axis()
-  .scale(x)
-  .orient('top')
-  .ticks(d3.time.months, 12)
-  .tickFormat(d3.time.format('%Y'))
-  .tickSize(1, 0, 0);
 
 var x1MonthAxis = d3.svg.axis()
   .scale(x1)
@@ -143,7 +144,7 @@ mini.append('g')
 mini.append('g')
   .attr('transform', 'translate(0,0.5)')
   .attr('class', 'axis month')
-  .call(xMonthAxis)
+  .call(xTopAxis)
   .selectAll('text')
   .remove();
 
