@@ -108,7 +108,8 @@ var xTopAxis = d3.svg.axis()
   .tickFormat(d3.time.format('%Y'))
   .tickSize(1, 0, 0);
 
-var x1DateAxis = d3.svg.axis()
+
+var xmainBottomAxis = d3.svg.axis()
   .scale(x1)
   .orient('bottom')
   .ticks(d3.time.years, 1)
@@ -116,7 +117,7 @@ var x1DateAxis = d3.svg.axis()
   .tickSize(6, 0, 0);
 
 
-var x1MonthAxis = d3.svg.axis()
+var xmainTopAxis = d3.svg.axis()
   .scale(x1)
   .orient('top')
   .ticks(d3.time.months, 1)
@@ -126,12 +127,12 @@ var x1MonthAxis = d3.svg.axis()
 main.append('g')
   .attr('transform', 'translate(0,' + mainHeight + ')')
   .attr('class', 'main axis date')
-  .call(x1DateAxis);
+  .call(xmainBottomAxis);
 
 main.append('g')
   .attr('transform', 'translate(0,0.5)')
   .attr('class', 'main axis month')
-  .call(x1MonthAxis)
+  .call(xmainTopAxis)
   .selectAll('text')
     .attr('dx', 5)
     .attr('dy', 12);
@@ -213,16 +214,16 @@ function display () {
   var ONEMONTH = 30*24*3600*1000;
 
   if ((maxExtent - minExtent) > ONEYEAR) {
-    x1DateAxis.ticks(d3.time.months, 3).tickFormat(d3.time.format('%b'));
-    x1MonthAxis.ticks(d3.time.years, 1).tickFormat(d3.time.format('%Y'));
+    xmainBottomAxis.ticks(d3.time.months, 3).tickFormat(d3.time.format('%b'));
+    xmainTopAxis.ticks(d3.time.years, 1).tickFormat(d3.time.format('%Y'));
   }
   else if ((maxExtent - minExtent) > ONEMONTH) {
-    x1DateAxis.ticks(d3.time.weeks, 4).tickFormat(d3.time.format('w%W'));
-    x1MonthAxis.ticks(d3.time.months, 1).tickFormat(d3.time.format('%b'));
+    xmainBottomAxis.ticks(d3.time.weeks, 4).tickFormat(d3.time.format('w%W'));
+    xmainTopAxis.ticks(d3.time.months, 1).tickFormat(d3.time.format('%b'));
   }
   else {
-    x1DateAxis.ticks(d3.time.days, 7).tickFormat(d3.time.format('d%e'));
-    x1MonthAxis.ticks(d3.time.weeks, 1).tickFormat(d3.time.format('w%W'));
+    xmainBottomAxis.ticks(d3.time.days, 7).tickFormat(d3.time.format('d%e'));
+    xmainTopAxis.ticks(d3.time.weeks, 1).tickFormat(d3.time.format('w%W'));
   }
 
 
@@ -234,8 +235,8 @@ function display () {
     .attr('x2', x1(now) + 0.5);
 
   // update the axis
-  main.select('.main.axis.date').call(x1DateAxis);
-  main.select('.main.axis.month').call(x1MonthAxis)
+  main.select('.main.axis.date').call(xmainBottomAxis);
+  main.select('.main.axis.month').call(xmainTopAxis)
     .selectAll('text')
       .attr('dx', 5)
       .attr('dy', 12);
