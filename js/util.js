@@ -1,3 +1,7 @@
+/*global d3, brush, x1, y1, xmainTopAxis, xmainBottomAxis, mini, minExtent,
+maxExtent, items, now, main, itemRects, x, y2 */
+//todo
+//refactor all those variables
 var display = function () {
 
   var rects, labels,
@@ -91,10 +95,12 @@ var moveBrush = function  () {
 // ugly - but draws mini 2x faster than append lines or line generator
 // is there a better way to do a bunch of lines as a single path with d3?
 var getPaths = function (items) {
-  var paths = {}, d, offset = .5 * y2(1) + 0.5, result = [];
+  var paths = {}, d, offset = 0.5 * y2(1) + 0.5, result = [];
   for (var i = 0; i < items.length; i++) {
     d = items[i];
-    if (!paths[d.class]) paths[d.class] = '';
+    if (!paths[d.class]){
+      paths[d.class] = '';
+    }
     paths[d.class] += ['M',x(d.start),(y2(d.lane) + offset),'H',x(d.end)].join(' ');
   }
 
