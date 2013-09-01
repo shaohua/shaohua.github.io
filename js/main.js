@@ -1,8 +1,7 @@
-var data = randomData()
+var data = realData
   , lanes = data.lanes
   , items = data.items
   , now = new Date();
-
 var margin = {top: 20, right: 15, bottom: 15, left: 60}
   , width = 960 - margin.left - margin.right
   , height = 500 - margin.top - margin.bottom
