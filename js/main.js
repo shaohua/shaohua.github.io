@@ -86,8 +86,8 @@ mini.append('g').selectAll('.laneText')
 var xDateAxis = d3.svg.axis()
   .scale(x)
   .orient('bottom')
-  .ticks(d3.time.mondays, (x.domain()[1] - x.domain()[0]) > 15552e6 ? 2 : 1)
-  .tickFormat(d3.time.format('%d'))
+  .ticks(d3.time.years, (x.domain()[1] - x.domain()[0]) > 15552e6 ? 2 : 1)
+  .tickFormat(d3.time.format('%Y'))
   .tickSize(6, 0, 0);
 
 var x1DateAxis = d3.svg.axis()
