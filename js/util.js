@@ -50,7 +50,7 @@ var display = function () {
 
   // upate the item rects
   rects = itemRects.selectAll('rect')
-    .data(visItems, function (d) { return d.id; })
+    .data(visItems, function (d) { return d.desc; })
     .attr('x', function(d) { return x1(d.start); })
     .attr('width', function(d) { return x1(d.end) - x1(d.start); });
 
@@ -65,11 +65,11 @@ var display = function () {
 
   // update the item labels
   labels = itemRects.selectAll('text')
-    .data(visItems, function (d) { return d.id; })
+    .data(visItems, function (d) { return d.desc; })
     .attr('x', function(d) { return x1(Math.max(d.start, minExtent)) + 2; });
 
   labels.enter().append('text')
-    .text(function (d) { return 'Item\n\n\n\n Id: ' + d.id; })
+    .text(function (d) { return '' + d.desc; })
     .attr('x', function(d) { return x1(Math.max(d.start, minExtent)) + 2; })
     .attr('y', function(d) { return y1(d.lane) + 0.4 * y1(1) + 0.5; })
     .attr('text-anchor', 'start')
