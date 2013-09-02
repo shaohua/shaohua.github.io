@@ -123,7 +123,7 @@ var xmainTopAxis = d3.svg.axis()
   .orient('top')
   .ticks(d3.time.months, 1)
   .tickFormat(d3.time.format('%b'))
-  .tickSize(15, 0, 0);
+  .tickSize(6, 0, 0);
 
 main.append('g')
   .attr('transform', 'translate(0,' + mainHeight + ')')
@@ -185,7 +185,7 @@ mini.append('rect')
 // draw the selection area
 var brush = d3.svg.brush()
   .x(x)
-  .extent([d3.time.year.offset(now, -1.5), d3.time.year.offset(now, 0.5)])
+  .extent([d3.time.year.offset(now, -1.5), d3.time.year.ceil(now)])
   .on("brush", display);
 
 mini.append('g')
